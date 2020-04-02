@@ -22,15 +22,6 @@ class _LoginWidgetState extends State<LoginWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 50.0),
-              CircleAvatar(
-                radius: 60.0,
-                child: Icon(
-                  Icons.account_circle,
-                  size: 110.0,
-                ),
-              ),
-              SizedBox(height: 50.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:40.0),
                 child: TextFormField(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login/constatnts.dart';
 import 'package:login/pages/nextpage.dart';
 import 'package:login/widgets/login_widget.dart';
@@ -9,7 +10,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool rememberMe;
@@ -40,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
     prefs.setBool('rememberMe', value);
   }
 
+  var height = 600.0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,48 +60,38 @@ class _LoginPageState extends State<LoginPage> {
           centerTitle: true,
           backgroundColor: Colors.transparent,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              LoginWidget(user: user, pass: pass),
-              SizedBox(height:10.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Checkbox(
-                          activeColor: Colors.blueAccent,
-                          value: rememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              rememberMe = value;
-                              pass.text = password;
-                              user.text = userid;
-                            });
-                          }
-                        ),
-                        Text('Remember Me'),
-                      ],
-                    ),
-                    GestureDetector(
-                      child: Text('Forgot Password ?'),
-                    ),
-                  ],
+        body: Column(
+          children: <Widget>[
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    height = 600.0;
+                  });
+                },
+                child: AnimatedSize(
+                  curve: Curves.linear,
+                  child: SvgPicture.asset(
+                    'assets/account.svg',
+                    height: height,
+                  ),
+                  duration: new Duration(milliseconds: 200),
+                  vsync: this,
                 ),
               ),
-              SizedBox(height: 40.0),
-              RaisedButton(
+            ),
+            Opacity(
+              opacity: height == 600 ? 1 : 0,
+              child: FlatButton(
                 onPressed: () {
-                  login();
+                  setState(() {
+                    height = 100.0;
+                  });
                 },
                 child: Text('Login'),
               ),
-              SizedBox(height: 50.0),
-            ],
-          ),
+            )
+          ],
         ),
       ),    
     );
