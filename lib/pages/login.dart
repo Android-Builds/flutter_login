@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login/constatnts.dart';
 import 'package:login/pages/nextpage.dart';
 import 'package:login/widgets/login_widget.dart';
@@ -16,6 +17,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   bool rememberMe;
   final user = new TextEditingController();
   final pass = new TextEditingController();
+
+  double _sigmaX = 2.0; // from 0-10
+  double _sigmaY = 2.0; // from 0-10
+  double _opacity = 0.0; // from 0-1.0
 
   login() {
     print('called');
@@ -48,49 +53,56 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text(
-            'Login',
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.w300
-            ),
-          ),
-          elevation: 0.0,
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-        ),
-        body: Column(
+        body: Stack(
           children: <Widget>[
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    height = 600.0;
-                  });
-                },
-                child: AnimatedSize(
-                  curve: Curves.linear,
-                  child: SvgPicture.asset(
-                    'assets/account.svg',
-                    height: height,
-                  ),
-                  duration: new Duration(milliseconds: 200),
-                  vsync: this,
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/img.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
+                child: Container(
+                  color: Colors.black.withOpacity(_opacity),
                 ),
               ),
             ),
-            Opacity(
-              opacity: height == 600 ? 1 : 0,
-              child: FlatButton(
-                onPressed: () {
-                  setState(() {
-                    height = 100.0;
-                  });
-                },
-                child: Text('Login'),
+            Padding(
+              padding: const EdgeInsets.only(top: 200.0),
+              child: Column(
+                children: <Widget>[
+                  LoginWidget(user: null, pass: null),
+                  SizedBox(height: 80.0),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Container(
+                      height: 50.0,
+                      width: 100.0,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(50.0)
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 60.0),
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 30.0,
+                  )
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),    

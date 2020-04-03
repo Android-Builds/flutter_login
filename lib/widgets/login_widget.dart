@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:login/constatnts.dart';
-import 'package:login/widgets/theme.dart';
 
 bool passwordVisible = true;
 
@@ -34,11 +33,22 @@ class _LoginWidgetState extends State<LoginWidget> {
                   obscureText: passwordVisible,
                   decoration: InputDecoration(
                     labelText: 'Username',
+                    labelStyle: TextStyle (
+                      color: Colors.white
+                    ),
                     hintText: 'Enter your Username',
-                    fillColor: getTheme(context) == 'dark' ? 
-                      Colors.grey[900] : Colors.grey[300],
-                    filled: true,
-                    border: InputBorder.none,
+                    hintStyle: TextStyle (
+                      color: Colors.grey
+                    ),
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.white
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -55,17 +65,28 @@ class _LoginWidgetState extends State<LoginWidget> {
                   obscureText: passwordVisible,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    hintText: 'Enter your password',
-                    fillColor: getTheme(context) == 'dark' ? 
-                      Colors.grey[900] : Colors.grey[300],
-                    filled: true,
-                    border: InputBorder.none,
+                    labelStyle: TextStyle (
+                      color: Colors.white
+                    ),
+                    hintText: 'Enter your Password',
+                    hintStyle: TextStyle (
+                      color: Colors.grey
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.white
+                      ),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.grey,
+                    ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         passwordVisible
                         ? Icons.visibility
                         : Icons.visibility_off,
-                        color: Colors.grey[600],
+                        color: Colors.grey,
                       ),
                       onPressed: () {
                         setState(() {
